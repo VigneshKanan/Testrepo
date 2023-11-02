@@ -33,6 +33,9 @@ jobs:
             echo "----------Binary Scanning-----------"
             ./trufflehog --fail-verified git ${{ github.event.repository.default_branch }} HEAD --json > trufflehog-findings.json
 
+      - name: truffle json view
+        run:  cat trufflehog-findings.json
+        
       - name: Upload Findings to GitHub Security
         uses: github/codeql-action/upload-sarif@v2
         with:

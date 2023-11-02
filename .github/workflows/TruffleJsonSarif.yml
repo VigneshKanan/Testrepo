@@ -1,0 +1,34 @@
+name: Convert JSON to SARIF
+
+on: [push]
+
+jobs:
+  convert:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set Up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install TruffleHog
+        run: pip install truffleHog
+
+      - name: Run TruffleHog Scan and Save to JSON
+        run: |
+          ./trufflehog --fail-verified git ${{ github.event.repository.default_branch }} HEAD --json > trufflehog-findings.json
+        working-directory: ${{ github.workspace }}
+
+      - name: Convert JSON to SARIF
+        run: |
+          codeql database analyze . --format=sarif-latest --output=trufflehog-findings.sarif
+        working-directory: ${{ github.workspace }}
+        
+      - name: Upload SARIF to GitHub Security
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: trufflehog-findings.sarif

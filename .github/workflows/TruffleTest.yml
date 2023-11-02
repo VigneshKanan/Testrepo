@@ -32,7 +32,8 @@ jobs:
         continue-on-error: true
         run: |
           # Use jq to convert JSON to SARIF
-          sed -e '1,4d' trufflehog-findings.json | jq '. | {version: "2.1.0", runs: [.]}' > trufflehog-findings.sarif
+          sed -e '1,4d' trufflehog-findings.json 
+          # | jq '. | {version: "2.1.0", runs: [.]}' > trufflehog-findings.sarif
         working-directory: ${{ github.workspace }}
 
       - name: truffle sarif view

@@ -12,13 +12,6 @@ jobs:
         with:
           fetch-depth: 0
           
-      # - name: Run Truffle Hog
-      #   run: | 
-      #     pip install trufflehog
-      #     trufflehog --regex https://$GITHUB_ACTOR:${{ secrets.ACCESS_TOKEN }}@github.com/DigitalInnovation/PrScanBot-Test.git          
-      #   env:
-      #     GITHUB_ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-
       - name: TruffleHog Bot scan
         continue-on-error: true
       #   uses: trufflesecurity/TruffleHog-Enterprise-Github-Action@main
@@ -45,9 +38,16 @@ jobs:
       - name: truffle sarif view
         continue-on-error: true
         run:  cat trufflehog-findings.sarif
+
+      - name: PIP convert
+        continue-on-error: true
+        run: | 
+          pip install joern2sarif
+          joern2sarif -i trufflehog-findings.json -o joern-findings.sarif
         
       - name: Upload SARIF to GitHub Security
         continue-on-error: true  
         uses: github/codeql-action/upload-sarif@v2
         with:
-          sarif_file: trufflehog-findings.sarif
+          sarif_file: joern-findings.sarif
+          # trufflehog-findings.sarif

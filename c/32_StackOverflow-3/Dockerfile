@@ -34,3 +34,16 @@ COPY start.sh /
 RUN chmod +x /start.sh
 
 CMD [ "/start.sh" ]
+
+Basic auth:
+https://admin:admin@the-internet.herokuapp.com/basic_auth
+
+API_TOKEN:
+https://mocki.io/v1/d4867d8b-b5d5-4a48-a4ab-79131b5809b8
+
+API_URL:
+https://api.escuelajs.co/api/v1/users
+
+Basic auth:
+https://admin:admin@the-internet.herokuapp.com/basic_auth
+

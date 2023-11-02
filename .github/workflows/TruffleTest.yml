@@ -1,9 +1,6 @@
 name: Truffle Hog Scan
 
-on:
-  push:
-    branches:
-      - master
+on: [push]
 
 jobs:
   truffle-hog-scan:

@@ -39,7 +39,7 @@ jobs:
         continue-on-error: true
         run: |
           # Use jq to convert JSON to SARIF
-          jq -n '. | {version: "2.1.0", runs: [input]}' --slurpfile input trufflehog-findings.json > trufflehog-findings.sarif
+          sed -e '1,4d' trufflehog-findings.json | jq '. | {version: "2.1.0", runs: [.]}' > trufflehog-findings.sarif
         working-directory: ${{ github.workspace }}
         
       - name: Upload SARIF to GitHub Security

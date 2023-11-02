@@ -31,15 +31,9 @@ jobs:
             echo "----------Download Latest TruffleHog Binaries-----------"
             curl -q "https://storage.googleapis.com/thog-releases/trufflehog-scanner/latest/fetch.sh" | bash
             echo "----------Binary Scanning-----------"
-            ./trufflehog --fail-verified git ${{ github.event.repository.default_branch }} HEAD --json > secrets.json
+            ./trufflehog --fail-verified git ${{ github.event.repository.default_branch }} HEAD --json > trufflehog-findings.json
 
-      # - name: Upload SARIF file
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: secrets-sarif
-      #     path: secrets.json
-
-      - name: Upload SARIF file to GitHub Code Scanning
+      - name: Upload Findings to GitHub Security
         uses: github/codeql-action/upload-sarif@v2
         with:
-          sarif-file: secrets.json
+          sarif_file: trufflehog-findings.json

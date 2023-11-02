@@ -38,7 +38,8 @@ jobs:
       - name: Convert JSON to SARIF
         continue-on-error: true
         run: |
-          codeql database analyze . --format=sarif-latest --output=trufflehog-findings.sarif
+          # Use jq to convert JSON to SARIF
+          jq -n '. | {version: "2.1.0", runs: [input]}' --slurpfile input trufflehog-findings.json > trufflehog-findings.sarif
         working-directory: ${{ github.workspace }}
         
       - name: Upload SARIF to GitHub Security

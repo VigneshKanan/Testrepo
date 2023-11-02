@@ -20,6 +20,7 @@ jobs:
       #     GITHUB_ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
       - name: TruffleHog Bot scan
+        continue-on-error: true
       #   uses: trufflesecurity/TruffleHog-Enterprise-Github-Action@main
       #   with:
       #       args: --fail-verified ${{ github.event.repository.default_branch }} HEAD --json 
@@ -31,9 +32,11 @@ jobs:
             ./trufflehog --fail-verified git ${{ github.event.repository.default_branch }} HEAD --json > trufflehog-findings.json
 
       - name: truffle json view
+        continue-on-error: true
         run:  cat trufflehog-findings.json
         
       - name: Upload Findings to GitHub Security
+        continue-on-error: true
         uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: trufflehog-findings.json

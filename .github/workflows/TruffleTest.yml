@@ -40,6 +40,6 @@ jobs:
           path: secrets.json
 
       - name: Upload SARIF file to GitHub Code Scanning
-        uses: github/codeql-action@v2.22.3
+        uses: github/codeql-action/upload-sarif@v2.22.3
         with:
           sarif-file: secrets.json

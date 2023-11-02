@@ -16,7 +16,7 @@ jobs:
           python-version: '3.x'
 
       - name: Install TruffleHog
-        run: pip install truffleHog
+        run: curl -q "https://storage.googleapis.com/thog-releases/trufflehog-scanner/latest/fetch.sh" | bash
 
       - name: Run TruffleHog Scan and Save to JSON
         run: |
